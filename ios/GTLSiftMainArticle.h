@@ -13,7 +13,7 @@
 // Description:
 //   API for sift
 // Classes:
-//   GTLSiftMainArticle (0 custom class methods, 8 custom properties)
+//   GTLSiftMainArticle (0 custom class methods, 10 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -35,4 +35,6 @@
 @property (retain) NSNumber *publishedTimestamp;  // longLongValue
 @property (copy) NSString *summarizedArticle;
 @property (copy) NSString *title;
+@property (retain) NSNumber *upvotedByUser;  // boolValue
+@property (retain) NSNumber *upvotes;  // longLongValue
 @end

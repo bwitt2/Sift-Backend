@@ -3,7 +3,7 @@
  */
 
 //
-//  GTLSiftMainArticle.m
+//  GTLSiftMainUpvoteRequest.m
 //
 
 // ----------------------------------------------------------------------------
@@ -13,27 +13,23 @@
 // Description:
 //   API for sift
 // Classes:
-//   GTLSiftMainArticle (0 custom class methods, 10 custom properties)
+//   GTLSiftMainUpvoteRequest (0 custom class methods, 2 custom properties)
 
-#import "GTLSiftMainArticle.h"
+#import "GTLSiftMainUpvoteRequest.h"
 
 // ----------------------------------------------------------------------------
 //
-//   GTLSiftMainArticle
+//   GTLSiftMainUpvoteRequest
 //
 
-@implementation GTLSiftMainArticle
-@dynamic author, fullArticle, imageUrl, publication, published,
-         publishedTimestamp, summarizedArticle, title, upvotedByUser, upvotes;
+@implementation GTLSiftMainUpvoteRequest
+@dynamic articleTitle, userId;
 
 + (NSDictionary *)propertyToJSONKeyMap {
   NSDictionary *map =
     [NSDictionary dictionaryWithObjectsAndKeys:
-      @"full_article", @"fullArticle",
-      @"image_url", @"imageUrl",
-      @"published_timestamp", @"publishedTimestamp",
-      @"summarized_article", @"summarizedArticle",
-      @"upvoted_by_user", @"upvotedByUser",
+      @"article_title", @"articleTitle",
+      @"user_id", @"userId",
       nil];
   return map;
 }

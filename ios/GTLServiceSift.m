@@ -28,6 +28,8 @@
                       [GTLSiftMainArticle class],
                       [GTLSiftMainArticleRequest class],
                       [GTLSiftMainArticleResponse class],
+                      [GTLSiftMainUpvoteRequest class],
+                      [GTLSiftMainUpvoteResponse class],
                       nil];
   return classes;
 }

@@ -32,6 +32,8 @@ class ArticleModel(ndb.Model):
   publication = ndb.StringProperty(required = True)
   summarized_article = ndb.StringProperty(indexed = False, repeated = True)
   full_article = ndb.StringProperty(indexed = False, required = True)
+  upvotes = ndb.IntegerProperty(required = True)
+  upvoters = ndb.StringProperty(repeated = True)
 
 # ------------------------------------
 #         STANDARDIZE DATETIME
@@ -101,7 +103,9 @@ def TechCrunch(latest):
                      image_url = str(item["media_content"][0]["url"]),
                      publication = "TechCrunch",
                      summarized_article = sum_article,
-                     full_article = full_article
+                     full_article = full_article,
+                     upvoters = [],
+                     upvotes = 0
                      ).put()
 
         logging.info(item["title"] + " from TechCrunch has been stored")
@@ -143,7 +147,9 @@ def FastCompany(latest):
                      image_url = str(item["media_content"][0]["url"]),
                      publication = "FastCompany",
                      summarized_article = sum_article,
-                     full_article = full_article
+                     full_article = full_article,
+                     upvoters = [],
+                     upvotes = 0
                      ).put()
 
         logging.info(item["title"] + " from FastCompany has been stored")
@@ -178,7 +184,9 @@ def VentureBeat(latest):
                      image_url = str(item["links"][1]["href"].replace("resize", "")),
                      publication = "VentureBeat",
                      summarized_article = sum_article,
-                     full_article = full_article
+                     full_article = full_article,
+                     upvoters = [],
+                     upvotes = 0
                      ).put()
 
         logging.info(item["title"] + " from VentureBeat has been stored")
@@ -215,7 +223,9 @@ def TheVerge(latest):
                      image_url = str(item["content"][0]["value"].split()[2][4:].replace('"', "")),
                      publication = "TheVerge",
                      summarized_article = sum_article,
-                     full_article = full_article
+                     full_article = full_article,
+                     upvoters = [],
+                     upvotes = 0
                      ).put()
 
         logging.info(item["title"] + " from The Verge has been stored")
@@ -242,7 +252,7 @@ def getArticlesFromAllPublications(latest_article_timestamp):
 class UpdateArticles(webapp2.RequestHandler):
     def get(self):
       latest_article_timestamp = 0
-      logging.info("IT HAS BEEN CALLLEDDDDDDD")
+
       try:
         latest_article = ArticleModel.query().order(-ArticleModel.published_timestamp).fetch(1)[0]
         latest_article_timestamp = latest_article.published_timestamp
@@ -255,6 +265,4 @@ class UpdateArticles(webapp2.RequestHandler):
       self.response.write(latest_article_timestamp)
 
 app = webapp2.WSGIApplication([('/tasks/updateArticles', UpdateArticles)], debug=True)
-
-
 

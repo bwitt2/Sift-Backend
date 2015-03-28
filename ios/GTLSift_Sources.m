@@ -21,6 +21,8 @@
 #import "GTLSiftMainArticle.m"
 #import "GTLSiftMainArticleRequest.m"
 #import "GTLSiftMainArticleResponse.m"
+#import "GTLSiftMainUpvoteRequest.m"
+#import "GTLSiftMainUpvoteResponse.m"
 
 #import "GTLQuerySift.m"
 #import "GTLServiceSift.m"

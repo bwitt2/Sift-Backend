@@ -13,7 +13,7 @@
 // Description:
 //   API for sift
 // Classes:
-//   GTLQuerySift (1 custom class methods, 1 custom properties)
+//   GTLQuerySift (2 custom class methods, 1 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLQuery.h"
@@ -22,6 +22,7 @@
 #endif
 
 @class GTLSiftMainArticleRequest;
+@class GTLSiftMainUpvoteRequest;
 
 @interface GTLQuerySift : GTLQuery
 
@@ -41,5 +42,11 @@
 //   kGTLAuthScopeSiftUserinfoEmail
 // Fetches a GTLSiftMainArticleResponse.
 + (id)queryForSiftApiGetArticlesWithObject:(GTLSiftMainArticleRequest *)object;
+
+// Method: sift.siftApi.upvote
+//  Authorization scope(s):
+//   kGTLAuthScopeSiftUserinfoEmail
+// Fetches a GTLSiftMainUpvoteResponse.
++ (id)queryForSiftApiUpvoteWithObject:(GTLSiftMainUpvoteRequest *)object;
 
 @end

@@ -3,7 +3,7 @@
  */
 
 //
-//  GTLSiftMainArticleRequest.h
+//  GTLSiftMainUpvoteRequest.h
 //
 
 // ----------------------------------------------------------------------------
@@ -13,7 +13,7 @@
 // Description:
 //   API for sift
 // Classes:
-//   GTLSiftMainArticleRequest (0 custom class methods, 3 custom properties)
+//   GTLSiftMainUpvoteRequest (0 custom class methods, 2 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -23,11 +23,10 @@
 
 // ----------------------------------------------------------------------------
 //
-//   GTLSiftMainArticleRequest
+//   GTLSiftMainUpvoteRequest
 //
 
-@interface GTLSiftMainArticleRequest : GTLObject
-@property (retain) NSNumber *currentArticleTimestamp;  // longLongValue
-@property (retain) NSNumber *numOfArticles;  // longLongValue
+@interface GTLSiftMainUpvoteRequest : GTLObject
+@property (copy) NSString *articleTitle;
 @property (copy) NSString *userId;
 @end

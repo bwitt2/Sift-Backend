@@ -18,6 +18,8 @@
 #import "GTLSiftMainArticle.h"
 #import "GTLSiftMainArticleRequest.h"
 #import "GTLSiftMainArticleResponse.h"
+#import "GTLSiftMainUpvoteRequest.h"
+#import "GTLSiftMainUpvoteResponse.h"
 
 #import "GTLQuerySift.h"
 #import "GTLServiceSift.h"
