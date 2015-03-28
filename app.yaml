@@ -1,0 +1,19 @@
+application: sift-1995
+version: 1
+runtime: python27
+threadsafe: true
+api_version: 1
+
+handlers:
+- url: /_ah/spi/.*
+  script: main.application
+- url: /tasks/.*
+  script: tasks.app
+
+libraries:
+- name: webapp2
+  version: "2.5.1"
+- name: lxml
+  version: latest
+- name: PIL
+  version: latest
