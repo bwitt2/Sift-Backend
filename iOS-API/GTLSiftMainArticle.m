@@ -38,4 +38,11 @@
   return map;
 }
 
++ (NSDictionary *)arrayPropertyToClassMap {
+  NSDictionary *map =
+    [NSDictionary dictionaryWithObject:[NSString class]
+                                forKey:@"summarized_article"];
+  return map;
+}
+
 @end

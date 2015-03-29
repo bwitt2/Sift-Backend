@@ -33,7 +33,7 @@
 @property (copy) NSString *publication;
 @property (copy) NSString *published;
 @property (retain) NSNumber *publishedTimestamp;  // longLongValue
-@property (copy) NSString *summarizedArticle;
+@property (retain) NSArray *summarizedArticle;  // of NSString
 @property (copy) NSString *title;
 @property (retain) NSNumber *upvotedByUser;  // boolValue
 @property (retain) NSNumber *upvotes;  // longLongValue

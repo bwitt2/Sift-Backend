@@ -95,20 +95,18 @@ def TechCrunch(latest):
         full_article = grab_link(item["links"][0]["href"]).cleaned_text
 
         #logging.info(full_article)
-        
-        ArticleModel(title = item["title"], 
-                     author = item["author"],
-                     published = str(dt),
-                     published_timestamp = int(ts), 
-                     image_url = str(item["media_content"][0]["url"]),
-                     publication = "TechCrunch",
-                     summarized_article = sum_article,
-                     full_article = full_article,
-                     upvoters = [],
-                     upvotes = 0
-                     ).put()
-
-        logging.info(item["title"] + " from TechCrunch has been stored")
+        if len(sum_article) >= 3:
+          ArticleModel(title = item["title"], 
+                      author = item["author"],
+                      published = str(dt),
+                      published_timestamp = int(ts), 
+                      image_url = str(item["media_content"][0]["url"]),
+                      publication = "TechCrunch",
+                      summarized_article = sum_article,
+                      full_article = full_article,
+                      upvoters = [],
+                      upvotes = 0
+                      ).put()
 
       else: # there are no new articles
         return
@@ -139,8 +137,8 @@ def FastCompany(latest):
         full_article = grab_link(item["links"][0]["href"]).cleaned_text
 
         logging.info(full_article)
-        
-        ArticleModel(title = item["title"], 
+        if len(sum_article) >= 3:
+          ArticleModel(title = item["title"], 
                      author = item["author"],
                      published = str(dt),
                      published_timestamp = int(ts), 
@@ -176,8 +174,8 @@ def VentureBeat(latest):
         full_article = grab_link(item["links"][0]["href"]).cleaned_text
 
         logging.info(full_article)
-        
-        ArticleModel(title = item["title"], 
+        if len(sum_article) >= 3:
+          ArticleModel(title = item["title"], 
                      author = item["author"],
                      published = str(dt),
                      published_timestamp = int(ts), 
@@ -216,7 +214,8 @@ def TheVerge(latest):
         sum_article = SummarizeUrl(item["links"][0]["href"])
         full_article = grab_link(item["links"][0]["href"]).cleaned_text
         
-        ArticleModel(title = item["title"], 
+        if len(sum_article) >= 3:
+          ArticleModel(title = item["title"], 
                      author = item["author"],
                      published = str(dt),
                      published_timestamp = int(ts), 
