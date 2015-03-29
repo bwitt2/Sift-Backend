@@ -102,16 +102,21 @@ class SiftApi(remote.Service):
       voted = False
 
       if request.num_of_articles > 0:
+        
         articles_query = ArticleModel.query( ArticleModel.published_timestamp > request.current_article_timestamp).order(ArticleModel.published_timestamp).fetch(request.num_of_articles)
         logging.info("num: " + str(len(articles_query)) + " request.num: " + str(request.num_of_articles))
+      
       else:
+        
         articles_query = ArticleModel.query( ArticleModel.published_timestamp < request.current_article_timestamp).order(-ArticleModel.published_timestamp).fetch(abs(request.num_of_articles))
         logging.info("num: " + str(len(articles_query)) + " request.num: " + str(abs(request.num_of_articles)))
 
       articles = []
+      
       for a in articles_query: 
         
         for voter in a.upvoters: 
+          
           if voter == request.user_id:
             voted = True
             break
@@ -126,7 +131,7 @@ class SiftApi(remote.Service):
                                 full_article = a.full_article,
                                 upvotes = a.upvotes,
                                 upvoted_by_user = voted
-                                ))
+                        )       )
         voted = False
 
       return ArticleResponse(articles = articles)
@@ -141,6 +146,7 @@ class SiftApi(remote.Service):
                       path='SiftApi/upvote', 
                       http_method='POST')
     def upvote(self, request):
+      
       try:
         article = ArticleModel.query( ArticleModel.title == request.article_title).fetch(1)[0]
       except:

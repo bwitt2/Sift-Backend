@@ -1,3 +1,11 @@
+'''
+
+Sift 2015
+Brandon Witt, Connor Giles
+Webapp2 Cron Job
+
+'''
+
 import webapp2
 
 from google.appengine.ext import endpoints
@@ -43,7 +51,7 @@ def standardize(format, dt):
     return datetime.datetime.strptime(str(dt), format)
 
 # ------------------------------------
-#            MAKE DATETIME
+#            MAKE TIMESTAMP
 # ------------------------------------
 
 def makeTimestamp(dt, epoch = datetime.datetime(1970,1,1)):
@@ -81,7 +89,7 @@ def Entrepreneur(latest):
 # ------------------------------------
 
 def TechCrunch(latest):
-    logging.info("TECH CRUNCH CALLED")
+
     url = "http://feeds.feedburner.com/TechCrunch/"
     feed = feedparser.parse(url)
 
@@ -91,11 +99,12 @@ def TechCrunch(latest):
       ts = makeTimestamp(dt)
 
       if int(ts) > int(latest): # there are new articles
+        
         sum_article = SummarizeUrl(item["links"][0]["href"])
         full_article = grab_link(item["links"][0]["href"]).cleaned_text
 
-        #logging.info(full_article)
         if len(sum_article) >= 3:
+          
           ArticleModel(title = item["title"], 
                       author = item["author"],
                       published = str(dt),
@@ -108,7 +117,7 @@ def TechCrunch(latest):
                       upvotes = 0
                       ).put()
 
-      else: # there are no new articles
+      else: 
         return
 
 # ------------------------------------
@@ -123,7 +132,7 @@ def Medium(latest):
 # ------------------------------------
 
 def FastCompany(latest):
-  logging.info("FAST COMPANY CALLED")
+
   url = "http://feeds.feedburner.com/fastcompany/headlines"
   feed = feedparser.parse(url)
 
@@ -133,11 +142,12 @@ def FastCompany(latest):
     ts = makeTimestamp(dt)
 
     if int(ts) > int(latest): # there are new articles
+        
         sum_article = SummarizeUrl(item["links"][0]["href"])
         full_article = grab_link(item["links"][0]["href"]).cleaned_text
 
-        logging.info(full_article)
         if len(sum_article) >= 3:
+          
           ArticleModel(title = item["title"], 
                      author = item["author"],
                      published = str(dt),
@@ -150,9 +160,7 @@ def FastCompany(latest):
                      upvotes = 0
                      ).put()
 
-        logging.info(item["title"] + " from FastCompany has been stored")
-
-    else: # there are no new articles
+    else:
         return
 
 # ------------------------------------
@@ -160,7 +168,7 @@ def FastCompany(latest):
 # ------------------------------------
 
 def VentureBeat(latest):
-  logging.info("VENTURE BEAT CALLED")
+
   url = "http://feeds.venturebeat.com/VentureBeat"
   feed = feedparser.parse(url)
 
@@ -170,11 +178,12 @@ def VentureBeat(latest):
       ts = makeTimestamp(dt)
 
       if int(ts) > int(latest): # there are new articles
+        
         sum_article = SummarizeUrl(item["links"][0]["href"])
         full_article = grab_link(item["links"][0]["href"]).cleaned_text
 
-        logging.info(full_article)
         if len(sum_article) >= 3:
+          
           ArticleModel(title = item["title"], 
                      author = item["author"],
                      published = str(dt),
@@ -187,9 +196,7 @@ def VentureBeat(latest):
                      upvotes = 0
                      ).put()
 
-        logging.info(item["title"] + " from VentureBeat has been stored")
-
-      else: # there are no new articles
+      else:
         return
 
 
@@ -198,11 +205,13 @@ def VentureBeat(latest):
 # ------------------------------------
 
 def TheVerge(latest):
+
   url = "http://www.theverge.com/rss/index.xml"
   feed = feedparser.parse(url)
   dt = 0
 
   for item in feed["items"]:
+    
     try:
       dt = standardize("%Y-%m-%d %H:%M:%S-04:00", item["published"].replace("T", " "))
     except: 
@@ -211,10 +220,12 @@ def TheVerge(latest):
     ts = makeTimestamp(dt)
 
     if int(ts) > int(latest): # there are new articles
+        
         sum_article = SummarizeUrl(item["links"][0]["href"])
         full_article = grab_link(item["links"][0]["href"]).cleaned_text
         
         if len(sum_article) >= 3:
+          
           ArticleModel(title = item["title"], 
                      author = item["author"],
                      published = str(dt),
@@ -227,9 +238,7 @@ def TheVerge(latest):
                      upvotes = 0
                      ).put()
 
-        logging.info(item["title"] + " from The Verge has been stored")
-
-    else: # there are no new articles
+    else:
         return
 
 # ------------------------------------
@@ -237,19 +246,27 @@ def TheVerge(latest):
 # ------------------------------------
 
 def getArticlesFromAllPublications(latest_article_timestamp):
-  #Entrepreneur(latest_article_timestamp) # snot working
-  TechCrunch(latest_article_timestamp) # DONE
+  
+  # completed publications 
+  
+  TechCrunch(latest_article_timestamp) 
+  FastCompany(latest_article_timestamp)
+  VentureBeat(latest_article_timestamp)
+
+  # incomplete publications
+
   #Medium(latest_article_timestamp)
-  FastCompany(latest_article_timestamp) # DONE
-  VentureBeat(latest_article_timestamp) # DONE
-  #TheVerge(latest_article_timestamp) # NOT USING, BUT DONE
+  #Entrepreneur(latest_article_timestamp) # not working
+  #TheVerge(latest_article_timestamp) # NOT USING, BUT DONE, needs some tweeking to make sure we get good articles
 
 # ------------------------------------
 #       UPDATE ARTICLES WEBAPP2
 # ------------------------------------
 
 class UpdateArticles(webapp2.RequestHandler):
+    
     def get(self):
+      
       latest_article_timestamp = 0
 
       try:
@@ -263,5 +280,5 @@ class UpdateArticles(webapp2.RequestHandler):
       self.response.headers['Content-Type'] = 'text/plain'
       self.response.write(latest_article_timestamp)
 
-app = webapp2.WSGIApplication([('/tasks/updateArticles', UpdateArticles)], debug=True)
+app = webapp2.WSGIApplication([('/tasks/updateArticles', UpdateArticles)], debug = True)
 
